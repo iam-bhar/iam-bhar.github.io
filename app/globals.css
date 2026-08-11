@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+  --space: #02040a;
+  /* darker page top */
+  --midnight: #05060b;
+  /* darker page bottom */
+
+  /* Surfaces */
+  --card: #0b1220;
+  /* darker card surface */
+  --card-hover: #0f1726;
+  /* slightly lighter on hover */
+  --glass: #0a0f17;
+  /* darker glass panels */
+
+  /* Borders */
+  --line: #1a2330;
+  --line-strong: #263244;
+
+  /* Text */
+  --ink: #ffffff;
+  /* brighter primary text */
+  --ink-soft: #cbd7e6;
+  /* brighter secondary text */
+  --ink-faint: #9fb0c6;
+  /* slightly stronger muted text */
+
+  /* Accents */
+  --cyan: #5ee7ff;
+  --cyan-strong: #22d3ee;
+  --indigo: #6366f1;
+  --purple: #a855f7;
+
+  /* Semantic */
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #fb7185;
+  --info: #60a5fa;
+
+  --background: var(--space);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-space: var(--space);
+  --color-midnight: var(--midnight);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-glass: var(--glass);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-cyan: var(--cyan);
+  --color-cyan-strong: var(--cyan-strong);
+  --color-indigo: var(--indigo);
+  --color-purple: var(--purple);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(180deg, var(--space) 0%, var(--midnight) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: rgba(94, 231, 255, 0.25);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@keyframes blob-1 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(40px, 60px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-30px, 20px) scale(0.95);
+  }
+}
+
+@keyframes blob-2 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-50px, 30px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(20px, -40px) scale(0.9);
+  }
+}
+
+@keyframes blob-3 {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(30px, -50px) scale(1.15);
+  }
+}
+
+.animate-blob-1 {
+  animation: blob-1 22s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: blob-2 26s ease-in-out infinite;
+}
+
+.animate-blob-3 {
+  animation: blob-3 30s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-blob-1,
+  .animate-blob-2,
+  .animate-blob-3 {
+    animation: none;
+  }
+}
+
+/* WebKit helpers for gradient text (ensures background-clip works on Safari)
+   Use the class alongside Tailwind's `bg-clip-text` + `text-transparent`. */
+.webkit-text-fill {
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+/* Improve legibility for gradient text over busy backgrounds */
+.text-outline {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+@keyframes name-glow {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+.animate-name-glow {
+  animation: name-glow 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-name-glow {
+    animation: none;
+  }
 }
