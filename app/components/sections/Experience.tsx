@@ -19,8 +19,8 @@ export default function Experience() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div id="experience" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-10">
-      <GlassCard accent="violet" className="flex flex-col p-8 sm:p-12">
+    <div id="experience" className="mx-auto max-w-5xl scroll-mt-24 px-2 py-5  sm:px-6 sm:py-8">
+      <GlassCard accent="violet" className="flex flex-col p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Career Path" title="Professional Experience" />
 
         <div className="relative">

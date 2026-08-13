@@ -20,8 +20,8 @@ export default function Contact() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div id="contact" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-10">
-      <GlassCard accent="rose" className="flex flex-col p-8 sm:p-12">
+    <div id="contact" className="mx-auto max-w-5xl scroll-mt-24 px-2 py-5  sm:px-6 sm:py-8">
+      <GlassCard accent="rose" className="flex flex-col p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Let's Talk" title="Get In Touch" />
 
         <p className="mx-auto mb-6 max-w-lg text-balance text-center text-sm leading-relaxed text-ink-soft">

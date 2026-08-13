@@ -72,8 +72,8 @@ function ProjectCard({ project, accent, index }: { project: (typeof projects)[nu
 
 export default function Projects() {
   return (
-    <div id="projects" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16">
-      <GlassCard accent="emerald" className="flex flex-col p-8 sm:p-12">
+    <div id="projects" className="mx-auto max-w-6xl scroll-mt-24 px-2 py-5 md:px-6 md:py-16  sm:px-6 sm:py-8">
+      <GlassCard accent="emerald" className="flex flex-col p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Shipped Work" title="Projects" />
 
         <div className="grid gap-5 sm:grid-cols-2">

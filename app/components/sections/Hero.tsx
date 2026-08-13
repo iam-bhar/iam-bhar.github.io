@@ -11,7 +11,7 @@ export default function Hero() {
   const initial = shouldReduceMotion ? false : undefined;
 
   return (
-    <section id="top" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-28 pb-20">
+    <section id="top" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-12 pb-10 md:pt-28 md:pb-20">
       <motion.div
         initial={initial ?? { opacity: 0, scale: 0.85, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}

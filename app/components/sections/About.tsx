@@ -23,9 +23,9 @@ export default function About() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: shouldReduceMotion ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="mx-auto max-w-5xl scroll-mt-24 px-6 py-10"
+      className="mx-auto max-w-5xl scroll-mt-24 px-2 py-5  sm:px-6 sm:py-8"
     >
-      <GlassCard accent="cyan" className="flex flex-col p-8 sm:p-12">
+      <GlassCard accent="cyan" className="flex flex-col p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Profile" title="About Me" />
 
         <p className="text-balance text-center text-sm leading-relaxed text-ink-soft sm:text-base">

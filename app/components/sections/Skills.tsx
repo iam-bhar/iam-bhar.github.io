@@ -34,8 +34,8 @@ export default function Skills() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div id="skills" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16">
-      <GlassCard accent="cyan" className="p-8 sm:p-12">
+    <div id="skills" className="mx-auto max-w-6xl scroll-mt-24 px-2 py-5 md:px-6 md:py-16 sm:px-6 sm:py-8">
+      <GlassCard accent="cyan" className="p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Toolbox" title="Skills & Expertise" />
 
         <motion.div

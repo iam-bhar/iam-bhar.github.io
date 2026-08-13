@@ -13,8 +13,8 @@ export default function Education() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div id="education" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-10">
-      <GlassCard accent="amber" className="flex flex-col p-8 sm:p-12">
+    <div id="education" className="mx-auto max-w-5xl scroll-mt-24 px-2 py-5  sm:px-6 sm:py-8">
+      <GlassCard accent="amber" className="flex flex-col p-4 sm:p-8 md:p-12">
         <SectionHeading eyebrow="Foundations" title="Education & Recognition" />
 
         <div className="flex flex-col gap-5">
