@@ -1,23 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, Mail, MapPin } from "lucide-react";
 import { profile } from "@/app/data/resume";
-import Spotlight from "@/app/components/ui/Spotlight";
+import { cn } from "@/app/lib/cn";
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+  const initial = shouldReduceMotion ? false : undefined;
+
   return (
     <section id="top" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-28 pb-20">
-      <Spotlight />
-
       <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: 20 }}
+        initial={initial ?? { opacity: 0, scale: 0.85, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative mb-8 h-32 w-32"
       >
-        <div className="absolute -inset-1.5 animate-[spin_8s_linear_infinite] rounded-[2.25rem] bg-[conic-gradient(from_0deg,#6366f1,#5ee7ff,#a855f7,#fbbf24,#6366f1)] opacity-80 blur-[2px]" />
+        <div
+          className={cn(
+            "absolute -inset-1.5 rounded-[2.25rem] bg-[conic-gradient(from_0deg,#6366f1,#5ee7ff,#a855f7,#fbbf24,#6366f1)] opacity-80 blur-[2px]",
+            shouldReduceMotion ? "" : "animate-[spin_8s_linear_infinite]",
+          )}
+        />
         <div className="relative h-full w-full overflow-hidden rounded-[2rem] border border-line-strong bg-card shadow-[0_20px_60px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)]">
           <Image
             src={profile.photo}
@@ -34,7 +40,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.p
-        initial={{ opacity: 0, y: 12 }}
+        initial={initial ?? { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.15 }}
         className="mb-4 flex items-center gap-2 rounded-full border border-line bg-glass/60 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.25em] text-ink-soft backdrop-blur-xl"
@@ -43,7 +49,7 @@ export default function Hero() {
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
         className="relative max-w-3xl text-center"
@@ -60,7 +66,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.h2
-        initial={{ opacity: 0, y: 20 }}
+        initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="mt-3 text-lg font-semibold text-cyan-strong sm:text-xl"
@@ -69,7 +75,7 @@ export default function Hero() {
       </motion.h2>
 
       <motion.p
-        initial={{ opacity: 0, y: 20 }}
+        initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
         className="mt-6 max-w-xl text-balance text-center text-sm leading-relaxed text-ink-soft sm:text-base"
@@ -78,7 +84,7 @@ export default function Hero() {
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
         className="mt-9 flex flex-wrap items-center justify-center gap-3"

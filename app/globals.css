@@ -73,6 +73,23 @@ html {
   color-scheme: dark;
 }
 
+/* Light theme — toggled via data-theme="light" on <html> (see ThemeToggle.tsx + the
+   anti-FOUC inline script in app/layout.tsx). Accent/semantic hues (cyan/indigo/purple/
+   warning/error/success) stay identical across themes; only base/surface/text tokens flip. */
+:root[data-theme="light"] {
+  --space: #f4f6fb;
+  --midnight: #e7ebf3;
+  --card: #ffffff;
+  --card-hover: #eef1f8;
+  --glass: #ffffff;
+  --line: #dde3ee;
+  --line-strong: #c4ccdc;
+  --ink: #0f172a;
+  --ink-soft: #46536b;
+  --ink-faint: #6b7893;
+  color-scheme: light;
+}
+
 body {
   background: linear-gradient(180deg, var(--space) 0%, var(--midnight) 100%);
   color: var(--foreground);
@@ -164,6 +181,92 @@ body {
   .animate-blob-3 {
     animation: none;
   }
+}
+
+/* Neumorphic "soft depth" treatment for small interactive controls sitting on
+   glass surfaces (nav pills/links, theme toggle, TechBadge, contact tiles).
+   Two offset shadows — a light tint top-left, a dark tint bottom-right — read as
+   a gentle extrusion from the glass surface. :active swaps to an inset pair so
+   the control feels physically pressed. Tints are derived from the existing
+   card/glass/line tokens (mixed with black/white) rather than new hardcoded
+   grays, so they track the active theme automatically. Shadow-only, cheap CSS
+   transitions (~150-200ms) — no transform/movement, so no reduced-motion guard
+   needed. See AGENTS.md "Neumorphic depth on interactive controls". */
+:root {
+  --neu-light: color-mix(in srgb, var(--card-hover) 100%, white 14%);
+  --neu-dark: color-mix(in srgb, var(--space) 100%, black 35%);
+}
+
+:root[data-theme="light"] {
+  --neu-light: color-mix(in srgb, white 100%, transparent 0%);
+  --neu-dark: color-mix(in srgb, var(--line-strong) 100%, black 8%);
+}
+
+/* All .neu-* classes below read through optional --neu-tint-light / --neu-tint-dark
+   custom properties (falling back to the plain --neu-light/--neu-dark tokens), so
+   any of them can be given a faint accent tint by a component setting those two
+   vars inline — see .glass-neu below for the full explanation. */
+.neu-surface {
+  box-shadow:
+    -3px -3px 8px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 55%, transparent),
+    3px 3px 8px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 60%, transparent);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.neu-surface:active {
+  box-shadow:
+    inset 2px 2px 5px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 55%, transparent),
+    inset -2px -2px 5px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 45%, transparent);
+  transform: scale(0.98);
+}
+
+/* Smaller/subtler variant for pill-shaped controls (badges, nav links) where a
+   full 8px throw would look heavy. */
+.neu-surface-sm {
+  box-shadow:
+    -2px -2px 5px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 45%, transparent),
+    2px 2px 5px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 50%, transparent);
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.neu-surface-sm:active {
+  box-shadow:
+    inset 1.5px 1.5px 3px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 50%, transparent),
+    inset -1.5px -1.5px 3px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 40%, transparent);
+  transform: scale(0.97);
+}
+
+/* Neumorphic treatment for large glass panels (GlassCard) and icon chips
+   (TiltIcon) — same light/dark dual-shadow language as .neu-surface above,
+   but with a much larger blur radius and lower opacity so big surfaces read
+   as gently extruded rather than muddy. Layered *underneath* (added to, not
+   replacing) each component's existing border/backdrop-blur/colored glow, so
+   the liquid-glass identity stays intact — this is additive depth, not a
+   flat-neumorphism reskin.
+
+   Both accept optional --neu-tint-light / --neu-tint-dark custom properties.
+   When a component is passed an `accent` prop, it sets these inline to
+   color-mix() blends of the accent's glow rgba (from app/data/theme.ts)
+   into the neutral --neu-light/--neu-dark tokens at a low percentage — this
+   is what makes the shadow read as faintly colorful instead of gray, and is
+   the same technique used for every other accent-tinted surface on the site.
+   Falls back to the plain neutral tokens when no accent is set. */
+.glass-neu {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    -14px -14px 36px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 30%, transparent),
+    14px 14px 36px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 38%, transparent);
+  transition: box-shadow 220ms ease;
+}
+
+.icon-neu {
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    -3px -3px 7px 0 color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) 50%, transparent),
+    3px 3px 7px 0 color-mix(in srgb, var(--neu-tint-dark, var(--neu-dark)) 55%, transparent);
+  transition: box-shadow 200ms ease;
 }
 
 /* WebKit helpers for gradient text (ensures background-clip works on Safari)

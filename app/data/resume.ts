@@ -1,5 +1,5 @@
 export const profile = {
-  name: "Bhargav Lal Krishna",
+  name: "BhargavLal KrishnaReddy Pulluru",
   title: "Senior Frontend Developer",
   tagline:
     "Technical Lead — Frontend with 6+ years architecting scalable, high-performance web applications and organization-wide design systems.",
@@ -146,6 +146,154 @@ export const experience: Experience[] = [
       "Enhanced application security by implementing JWT-based authentication.",
       "Worked in an agile development environment, participating in sprints, daily stand-ups, and code reviews.",
     ],
+  },
+];
+
+export type Project = {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  /** Optional — comma-separated, same format as `experience[].technologies`. Add per-project as details come in. */
+  technologies?: string;
+  description: string;
+  /** Optional — set once a live/repo link exists. */
+  link?: string;
+};
+
+/**
+ * Newest first. To add a new project, prepend an entry here — no component
+ * changes needed (Projects.tsx just maps over this array).
+ */
+export const projects: Project[] = [
+  {
+    title: "Doctors CRM (MilesForce 3)",
+    company: "Miles Education",
+    location: "Bangalore (Offsite)",
+    period: "May 2025 – Aug 2025",
+    description:
+      "A new vertical was introduced in the organization to serve Doctors, requiring a minimal CRM platform focused on essential features like Calling, All Leads, Lead Details, and Queue. Leveraging experience from the previous CRM project, we successfully delivered these core features within a tight timeline.",
+  },
+  {
+    title: "Miles CRM (MilesForce)",
+    company: "Miles Education",
+    location: "Bangalore (Offsite)",
+    period: "Jun 2024 – May 2025",
+    technologies: "Next.js, React.js, Tailwind CSS, Zustand",
+    description:
+      "MilesForce is an in-house CRM application built using Next.js, React, Tailwind CSS, and Zustand. It is designed to streamline lead tracking and student enrollment processes. The platform focuses on efficient lead engagement, helping teams manage and convert prospects more effectively.",
+  },
+  {
+    title: "Miles LMS — 2024 Revamp",
+    company: "Miles Education Pvt Ltd",
+    location: "Bangalore (Offsite)",
+    period: "Oct 2023 – Dec 2023",
+    description:
+      "New version of the existing LMS at Miles Education — revamped with new designs and functionality; the look and feel is entirely different from the original.",
+  },
+  {
+    title: "Miles Education Website",
+    company: "Miles Education",
+    location: "Bangalore (Offsite)",
+    period: "Aug 2023 – Aug 2024",
+    technologies: "Next.js, TypeScript, Supabase",
+    description:
+      "An information hub for users to explore the organization and its courses, with the option to enroll directly. Includes six main modules: Home, Courses, Contact, About Us, Blogs, and special campaign pages.",
+  },
+  {
+    title: "Webinar Registration Website & Payment Integration",
+    company: "Miles CPA",
+    location: "Offsite",
+    period: "Jun 2023 – Sep 2023",
+    technologies: "Next.js, Supabase",
+    description:
+      "Landing page for webinar registration in the Miles USP, including a payment page and direct registration based on shared links. Built on Next.js with a Supabase real-time database.",
+  },
+  {
+    title: "Miles CPA Factory",
+    company: "Miles CPA",
+    location: "Bangalore (Offsite)",
+    period: "Mar 2023 – Aug 2023",
+    description: "A CMS project where all questions, SIMs, and MCQs are created and managed.",
+  },
+  {
+    title: "MILES Education LMS",
+    company: "Miles CPA",
+    location: "Bangalore (Offsite)",
+    period: "Oct 2022 – Oct 2023",
+    description:
+      "A Learning Management System where students access their exams, SIMs, notes, and webinars from within the platform.",
+  },
+  {
+    title: "Sweetart Web Billing",
+    company: "Just Bake",
+    location: "Offsite",
+    period: "Sep 2022",
+    description: "Web billing application built for a franchise of Just Bake.",
+  },
+  {
+    title: "Tutorhive Web Application",
+    company: "Tutorhive",
+    location: "Offsite",
+    period: "May 2022 – Sep 2022",
+    description: "Worked on the chat module, set-availability module, invite-buddies flow, and user search.",
+  },
+  {
+    title: "Tutorhive Single Page Web App",
+    company: "Tutorhive",
+    location: "Offsite",
+    period: "Feb 2022 – May 2022",
+    description: "Educational website built for tutors and students.",
+  },
+  {
+    title: "HouseBuddy Web Application",
+    company: "HouseBuddy",
+    location: "Offsite",
+    period: "Oct 2021 – Feb 2022",
+    description: "Main application powering the HouseBuddy user experience.",
+  },
+  {
+    title: "HouseBuddy Website & CMS Application",
+    company: "House Buddy",
+    location: "Offsite",
+    period: "Aug 2021 – Oct 2021",
+    technologies: "PHP, MySQL, Bootstrap",
+    description: "Public website for the HouseBuddy application, built on PHP, MySQL, and Bootstrap.",
+  },
+  {
+    title: "Just Bake E-commerce Web Application UI",
+    company: "Just Bake",
+    location: "Offsite",
+    period: "Apr 2021 – Jul 2021",
+    description: "New e-commerce UI built as a frontend developer, from scratch to launch.",
+  },
+  {
+    title: "CFM India Online Course E-commerce & CMS",
+    company: "CFM India",
+    location: "Offsite",
+    period: "Dec 2020 – Feb 2021",
+    description: "Education e-commerce application built for management students.",
+  },
+  {
+    title: "Berlynoak E-commerce Website & CMS",
+    company: "Berlynoak",
+    location: "Offsite",
+    period: "Oct 2020 – Jan 2021",
+    description: "E-commerce website and CMS for a furniture & appliances brand modeled on Royal Oak.",
+  },
+  {
+    title: "Just Bake Web Billing Application",
+    company: "Just Bake",
+    location: "Offsite",
+    period: "Oct 2019 – Sep 2020",
+    description: "Web billing application for Just Bake — still maintained.",
+  },
+  {
+    title: "Chef Bake E-commerce",
+    company: "Chef Bakers",
+    location: "Offsite",
+    period: "Sep 2019 – Nov 2019",
+    description: "Maintenance work on the e-commerce application in its initial stage of development.",
   },
 ];
 

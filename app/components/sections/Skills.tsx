@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Code2, Gauge, Wrench, Users, Layers, Database, Radio } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import SectionHeading from "@/app/components/ui/SectionHeading";
@@ -31,43 +31,45 @@ const groupAccents: Record<string, AccentKey> = {
 };
 
 export default function Skills() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="skills" className="relative px-6 py-24">
-      <div className="mx-auto max-w-5xl">
+    <div id="skills" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16">
+      <GlassCard accent="cyan" className="p-8 sm:p-12">
         <SectionHeading eyebrow="Toolbox" title="Skills & Expertise" />
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6 }}
-          className="mb-10 flex flex-wrap justify-center gap-2.5"
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
+          className="mb-8 flex flex-wrap justify-center gap-2.5"
         >
           {skills.map((skill, i) => (
             <motion.span
               key={skill}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.03 }}
-              whileHover={{ y: -3 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : i * 0.03 }}
+              whileHover={shouldReduceMotion ? undefined : { y: -3 }}
             >
               <TechBadge name={skill} size="md" className="px-1 py-1.5 text-sm" />
             </motion.span>
           ))}
         </motion.div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {keyExpertise.map((group, i) => {
             const Icon = icons[group.title] ?? Code2;
             const accent = groupAccents[group.title] ?? "violet";
             return (
               <motion.div
                 key={group.title}
-                initial={{ opacity: 0, y: 24 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="group"
               >
                 <GlassCard accent={accent} className="flex h-full flex-col gap-4 p-6">
@@ -85,7 +87,7 @@ export default function Skills() {
             );
           })}
         </div>
-      </div>
-    </section>
+      </GlassCard>
+    </div>
   );
 }

@@ -17,6 +17,7 @@ export const sectionAccents: Record<string, AccentKey> = {
   hero: "violet",
   about: "cyan",
   experience: "violet",
+  projects: "emerald",
   skills: "cyan",
   education: "amber",
   contact: "rose",

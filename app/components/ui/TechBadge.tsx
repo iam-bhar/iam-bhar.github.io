@@ -17,7 +17,7 @@ export default function TechBadge({ name, className, size = "sm" }: TechBadgePro
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-line bg-glass/50 py-1 pr-3 text-xs font-medium text-ink-soft backdrop-blur-xl transition-colors duration-300 hover:border-line-strong hover:text-ink",
+        "neu-surface-sm inline-flex items-center gap-1.5 rounded-full border border-line bg-glass/50 py-1.5 pr-3 text-xs font-medium text-ink-soft backdrop-blur-xl transition-colors duration-300 hover:border-line-strong hover:text-ink",
         hasIcon ? "pl-1.5" : "pl-3",
         className,
       )}

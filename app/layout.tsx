@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Bhargav Lal Krishna",
+  title: "BhargavLal KrishnaReddy Pulluru | Senior Frontend Developer",
   description: profile?.title,
   icons: [
     { rel: "icon", url: `${basePath}/favicon/favicon-96x96.png`, type: "image/png", sizes: "96x96" },
@@ -26,16 +26,33 @@ export const metadata: Metadata = {
     { rel: "manifest", url: `${basePath}/favicon/site.webmanifest` },
   ],
   appleWebApp: {
-    title: "Bhargav lal Krishna",
+    title: "BhargavLal KrishnaReddy Pulluru | Senior Frontend Developer",
   },
 };
+
+const themeInitScript = `
+(function () {
+  try {
+    var stored = window.localStorage.getItem("theme");
+    var theme = stored === "light" || stored === "dark" ? stored : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();
+`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Sets data-theme before hydration to avoid a flash of the wrong theme (dark is the default). */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col bg-space text-ink">{children}</body>
     </html>
   );

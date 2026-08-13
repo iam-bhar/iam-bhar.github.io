@@ -19,7 +19,8 @@
       "Bash(python3 -)",
       "Bash(node shot2.js)",
       "Bash(npm view *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "WebSearch"
     ]
   }
 }

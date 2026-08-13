@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Briefcase, MapPin } from "lucide-react";
 import SectionHeading from "@/app/components/ui/SectionHeading";
 import GlassCard from "@/app/components/ui/GlassCard";
@@ -16,29 +16,31 @@ function splitTech(tech: string) {
 }
 
 export default function Experience() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section id="experience" className="relative px-6 py-24">
-      <div className="mx-auto max-w-3xl">
+    <div id="experience" className="mx-auto max-w-5xl scroll-mt-24 px-6 py-10">
+      <GlassCard accent="violet" className="flex flex-col p-8 sm:p-12">
         <SectionHeading eyebrow="Career Path" title="Professional Experience" />
 
         <div className="relative">
           <div className="absolute left-7 top-2 bottom-2 hidden w-px bg-gradient-to-b from-line-strong via-line to-transparent sm:block" />
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             {experience.map((job, i) => (
               <motion.div
                 key={`${job.company}-${job.period}`}
-                initial={{ opacity: 0, y: 32 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : i * 0.06, ease: [0.16, 1, 0.3, 1] }}
                 className="group relative sm:pl-20"
               >
                 <div className="absolute left-0 top-0 hidden sm:block">
                   <TiltIcon icon={Briefcase} accent={jobAccents[i % jobAccents.length]} />
                 </div>
 
-                <GlassCard accent={jobAccents[i % jobAccents.length]} className="p-6 sm:p-7">
+                <GlassCard accent={jobAccents[i % jobAccents.length]} className="p-5 sm:p-6">
                   <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-lg font-semibold text-ink">{job.role}</h3>
@@ -102,7 +104,7 @@ export default function Experience() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </GlassCard>
+    </div>
   );
 }

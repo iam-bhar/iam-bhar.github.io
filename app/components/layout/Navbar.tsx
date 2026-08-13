@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Menu, X, User, Briefcase, FolderGit2, Code2, GraduationCap, Mail } from "lucide-react";
 import { cn } from "@/app/lib/cn";
+import ThemeToggle from "@/app/components/ui/ThemeToggle";
+import Dock, { type DockItem } from "@/app/components/ui/Dock";
 
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
-  { href: "#education", label: "Education" },
-  { href: "#contact", label: "Contact" },
+const links: DockItem[] = [
+  { href: "#about", label: "About", icon: User },
+  { href: "#experience", label: "Experience", icon: Briefcase },
+  { href: "#projects", label: "Projects", icon: FolderGit2 },
+  { href: "#skills", label: "Skills", icon: Code2 },
+  { href: "#education", label: "Education", icon: GraduationCap },
+  { href: "#contact", label: "Contact", icon: Mail },
 ];
 
 export default function Navbar() {
@@ -31,9 +34,11 @@ export default function Navbar() {
     };
   }, [open]);
 
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.header
-      initial={{ y: -80, opacity: 0 }}
+      initial={shouldReduceMotion ? false : { y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
@@ -56,44 +61,40 @@ export default function Navbar() {
             <span className="hidden text-ink-faint sm:inline">Pulluru</span>
           </a>
 
-          <ul className="hidden items-center gap-1 sm:flex">
-            {links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="group relative rounded-full px-3.5 py-1.5 text-sm text-ink-soft transition-colors duration-300 hover:text-ink"
-                >
-                  {link.label}
-                  <span className="absolute inset-x-3.5 -bottom-0.5 h-px scale-x-0 bg-gradient-to-r from-indigo via-cyan to-purple transition-transform duration-300 group-hover:scale-x-100" />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="hidden sm:block">
+            <Dock items={links} disableMagnify={shouldReduceMotion ?? false} />
+          </div>
 
-          <a
-            href="#contact"
-            className="hidden rounded-full border border-line bg-gradient-to-r from-indigo/90 to-purple/90 px-4 py-1.5 text-sm font-medium text-white shadow-[0_4px_16px_rgba(168,85,247,0.35)] transition-all duration-300 hover:shadow-[0_6px_22px_rgba(168,85,247,0.5)] sm:block"
-          >
-            Hire Me
-          </a>
+          <div className="hidden items-center gap-2 sm:flex">
+            <ThemeToggle />
+            <a
+              href="#contact"
+              className="neu-surface-sm rounded-full border border-line bg-gradient-to-r from-indigo/90 to-purple/90 px-4 py-2 text-sm font-medium text-white shadow-[0_4px_16px_rgba(168,85,247,0.35)] transition-all duration-300 hover:shadow-[0_6px_22px_rgba(168,85,247,0.5)]"
+            >
+              Hire Me
+            </a>
+          </div>
 
-          <button
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle menu"
-            className="flex h-8 w-8 items-center justify-center rounded-full text-ink sm:hidden"
-          >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-1 sm:hidden">
+            <ThemeToggle />
+            <button
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Toggle menu"
+              className="neu-surface flex h-10 w-10 items-center justify-center rounded-full text-ink"
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </nav>
       </div>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -12, scale: 0.98 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -12, scale: shouldReduceMotion ? 1 : 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -12, scale: shouldReduceMotion ? 1 : 0.98 }}
+            transition={{ duration: shouldReduceMotion ? 0.1 : 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="absolute left-4 right-4 top-[calc(100%+0.5rem)] rounded-3xl border border-line bg-midnight/90 p-3 shadow-[0_16px_48px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:hidden"
           >
             <ul className="flex flex-col gap-1">
@@ -112,7 +113,7 @@ export default function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setOpen(false)}
-                  className="mt-1 block rounded-2xl bg-gradient-to-r from-indigo to-purple px-4 py-3 text-center text-sm font-semibold text-white"
+                  className="neu-surface-sm mt-1 block rounded-2xl bg-gradient-to-r from-indigo to-purple px-4 py-3 text-center text-sm font-semibold text-white"
                 >
                   Hire Me
                 </a>
