@@ -9,6 +9,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/bhargav-lal-krishna-pulluru-46544a202/",
   initials: "BK",
   photo: "/my_photo.jpg",
+  resume: "/resume.pdf",
 };
 
 export const skills = [
@@ -84,15 +85,6 @@ export const experience: Experience[] = [
     bullets: [],
     subRoles: [
       {
-        role: "Senior Frontend Developer | PayPal (Client)",
-        bullets: [
-          "Gained hands-on exposure to Next.js and React architecture within PayPal's large-scale frontend ecosystem.",
-          "Explored and understood Guest Checkout features, including form handling, validation logic, and user flow.",
-          "Assisted in minor UI updates, bug fixes, and unit testing tasks using Jest.",
-          "Collaborated with senior developers to understand code structure, best practices, and development workflows in an enterprise setup.",
-        ],
-      },
-      {
         role: "Technical Lead – Frontend | Epiroc (Client)",
         technologies:
           "React.js, TypeScript, JavaScript (ES6+), Zustand, Tailwind CSS 4, Storybook, Figma, HTML5, CSS3, MapLibre GL JS, Lucide Icons, Git, GitHub, GitHub Copilot, SVGO",
@@ -109,6 +101,15 @@ export const experience: Experience[] = [
           "Leading the development of a centralized Design System to standardize UI components across organizational applications, using Atomic Design and Storybook.",
           "Establishing design tokens, typography, spacing, color systems, and component guidelines.",
           "Optimizing SVG assets using SVGO and integrating Lucide Icons for a lightweight, consistent visual language.",
+        ],
+      },
+      {
+        role: "Senior Frontend Developer | PayPal (Client)",
+        bullets: [
+          "Gained hands-on exposure to Next.js and React architecture within PayPal's large-scale frontend ecosystem.",
+          "Explored and understood Guest Checkout features, including form handling, validation logic, and user flow.",
+          "Assisted in minor UI updates, bug fixes, and unit testing tasks using Jest.",
+          "Collaborated with senior developers to understand code structure, best practices, and development workflows in an enterprise setup.",
         ],
       },
     ],

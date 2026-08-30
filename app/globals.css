@@ -1,31 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* Background */
-  --space: #02040a;
-  /* darker page top */
-  --midnight: #05060b;
-  /* darker page bottom */
+  /* Background (light theme is now the default; see :root[data-theme="dark"] below) */
+  --space: #f4f6fb;
+  --midnight: #e7ebf3;
 
   /* Surfaces */
-  --card: #0b1220;
-  /* darker card surface */
-  --card-hover: #0f1726;
-  /* slightly lighter on hover */
-  --glass: #0a0f17;
-  /* darker glass panels */
+  --card: #ffffff;
+  --card-hover: #eef1f8;
+  --glass: #ffffff;
 
   /* Borders */
-  --line: #1a2330;
-  --line-strong: #263244;
+  --line: #dde3ee;
+  --line-strong: #c4ccdc;
 
   /* Text */
-  --ink: #ffffff;
-  /* brighter primary text */
-  --ink-soft: #cbd7e6;
-  /* brighter secondary text */
-  --ink-faint: #9fb0c6;
-  /* slightly stronger muted text */
+  --ink: #0f172a;
+  --ink-soft: #46536b;
+  --ink-faint: #6b7893;
+
+  color-scheme: light;
 
   /* Accents */
   --cyan: #5ee7ff;
@@ -64,30 +58,30 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-info: var(--info);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-app-sans);
+  --font-mono: var(--font-app-mono);
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
-/* Light theme — toggled via data-theme="light" on <html> (see ThemeToggle.tsx + the
-   anti-FOUC inline script in app/layout.tsx). Accent/semantic hues (cyan/indigo/purple/
-   warning/error/success) stay identical across themes; only base/surface/text tokens flip. */
-:root[data-theme="light"] {
-  --space: #f4f6fb;
-  --midnight: #e7ebf3;
-  --card: #ffffff;
-  --card-hover: #eef1f8;
-  --glass: #ffffff;
-  --line: #dde3ee;
-  --line-strong: #c4ccdc;
-  --ink: #0f172a;
-  --ink-soft: #46536b;
-  --ink-faint: #6b7893;
-  color-scheme: light;
+/* Dark theme — toggled via data-theme="dark" on <html> (see ThemeToggle.tsx + the
+   anti-FOUC inline script in app/layout.tsx). Light (the :root default above) is now
+   the default theme. Accent/semantic hues (cyan/indigo/purple/warning/error/success)
+   stay identical across themes; only base/surface/text tokens flip. */
+:root[data-theme="dark"] {
+  --space: #02040a;
+  --midnight: #05060b;
+  --card: #0b1220;
+  --card-hover: #0f1726;
+  --glass: #0a0f17;
+  --line: #1a2330;
+  --line-strong: #263244;
+  --ink: #ffffff;
+  --ink-soft: #cbd7e6;
+  --ink-faint: #9fb0c6;
+  color-scheme: dark;
 }
 
 body {
@@ -193,13 +187,13 @@ body {
    transitions (~150-200ms) — no transform/movement, so no reduced-motion guard
    needed. See AGENTS.md "Neumorphic depth on interactive controls". */
 :root {
-  --neu-light: color-mix(in srgb, var(--card-hover) 100%, white 14%);
-  --neu-dark: color-mix(in srgb, var(--space) 100%, black 35%);
-}
-
-:root[data-theme="light"] {
   --neu-light: color-mix(in srgb, white 100%, transparent 0%);
   --neu-dark: color-mix(in srgb, var(--line-strong) 100%, black 8%);
+}
+
+:root[data-theme="dark"] {
+  --neu-light: color-mix(in srgb, var(--card-hover) 100%, white 14%);
+  --neu-dark: color-mix(in srgb, var(--space) 100%, black 35%);
 }
 
 /* All .neu-* classes below read through optional --neu-tint-light / --neu-tint-dark
@@ -282,10 +276,13 @@ body {
 }
 
 @keyframes name-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.55;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.85;
     transform: scale(1.03);

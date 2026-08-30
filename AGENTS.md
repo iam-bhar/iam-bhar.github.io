@@ -58,13 +58,13 @@ Profile photo: `public/my_photo.jpg`, referenced via `profile.photo`. To swap it
 
 Base: dark space/midnight gradient background (not flat black) with colorful cyan/indigo/purple accents plus warm amber/rose/emerald semantic-reused accents layered on top via gradients, glows, and blurred blobs — "colorful dark theme," not monochrome. The site leans intentionally colorful/vivid rather than subtle: `AnimatedBackground` runs four large blurred accent blobs at higher opacity (indigo/40, cyan/35, purple/30, warning/20) instead of a faint tint, and `GlassCard` renders a two-corner colored glow (not just one) at higher opacity (0.40 / 0.25) plus an `accent`-tinted `border-line-strong` border when an `accent` prop is passed — keep new colored surfaces at this same vividness rather than reverting to subtle/muted glows.
 
-### Light theme (toggle, not a replacement)
+### Light/dark theme (toggle; light is default)
 
-Dark is still the default and the values above are the `:root` (no `data-theme` attribute) definitions. A `:root[data-theme="light"]` block in `globals.css` redefines only the base/surface/text tokens — `space`, `midnight`, `card`, `card-hover`, `glass`, `line`, `line-strong`, `ink`, `ink-soft`, `ink-faint`, plus `color-scheme: light` — to light equivalents (light gray/white surfaces, dark text). The accent and semantic tokens (`cyan`, `cyan-strong`, `indigo`, `purple`, `success`, `warning`, `error`, `info`) are **not** redefined for light mode — same hex in both themes, so the colorful-accent identity survives the switch; only the canvas flips.
+**Light is the default theme.** The values in the token table above are the `:root` (no `data-theme` attribute) definitions — light gray/white surfaces, dark text. A `:root[data-theme="dark"]` block in `globals.css` redefines only the base/surface/text tokens — `space`, `midnight`, `card`, `card-hover`, `glass`, `line`, `line-strong`, `ink`, `ink-soft`, `ink-faint`, plus `color-scheme: dark` — to the dark equivalents. The accent and semantic tokens (`cyan`, `cyan-strong`, `indigo`, `purple`, `success`, `warning`, `error`, `info`) are **not** redefined per theme — same hex in both, so the colorful-accent identity survives the switch; only the canvas flips. The `--neu-light`/`--neu-dark` shadow-tint tokens (used by `.neu-*` classes) are likewise defined light-first on `:root` with a `:root[data-theme="dark"]` override.
 
 Theme switching is hand-rolled (no `next-themes` dependency):
-- `app/components/ui/ThemeToggle.tsx` — client component, Sun/Moon icons from `lucide-react`, toggles `data-theme` on `document.documentElement` and persists the choice to `localStorage` (`"theme"` key, values `"dark"`/`"light"`).
-- `app/layout.tsx` has an inline `<script>` in `<head>` (before hydration) that reads `localStorage.theme` and sets `data-theme` on `<html>` immediately — this is the anti-FOUC step; it defaults to `"dark"` when nothing is stored, matching prior (pre-toggle) behavior.
+- `app/components/ui/ThemeToggle.tsx` — client component, Sun/Moon icons from `lucide-react`, toggles `data-theme` on `document.documentElement` and persists the choice to `localStorage` (`"theme"` key, values `"dark"`/`"light"`). Defaults its own state to `"light"` to match the SSR/anti-FOUC default.
+- `app/layout.tsx` has an inline `<script>` in `<head>` (before hydration) that reads `localStorage.theme` and sets `data-theme` on `<html>` immediately — this is the anti-FOUC step; it defaults to `"light"` when nothing is stored.
 - The toggle button is rendered in `Navbar.tsx` in both the desktop pill nav and the mobile drawer's icon row.
 - Conic-gradient hex literals in `Spotlight.tsx`/Hero's photo ring/`AnimatedBackground.tsx` are left as-is in light mode — they hardcode accent hex values, and accents don't change between themes, so no separate light variant is needed there. `GlassCard`/`TiltIcon`/`Navbar` overlay `rgba(255,255,255,…)` highlights are subtle enough (low opacity, layered under a colored `accent` glow or a light-mode `glass`/`card` surface) that they don't wash out on light backgrounds; revisit if a future component adds a strong white overlay assuming a dark backdrop.
 
@@ -128,6 +128,14 @@ Goal is cheaper-per-frame motion, not less-alive motion:
 - All `whileInView` reveals use `viewport={{ once: true, ... }}` so they fire once and don't re-trigger on repeated scroll past the same element.
 - `GlassCard` has no hover/pointer-tracked tilt (removed per request — cards are static now, only their `accent` glow is decorative). `TiltIcon`'s pointer-tracked rotateX/rotateY + glow still skips entirely when `useReducedMotion()` is true, and additionally checks `window.matchMedia("(pointer: fine)")` on mount to disable the tilt/glow listeners on touch devices (no meaningful hover pointer there, and it avoids pointless per-touch re-renders).
 - `AnimatedBackground.tsx` is a client component that listens for `visibilitychange` and applies `[animation-play-state:paused]` to the blob divs while the tab is hidden, so the blurred blobs stop costing CPU/battery when the page isn't visible. It now renders 4 blobs at higher opacity (see the vividness note under Theme) — cut further if profiling shows it's needed, but tab-visibility pausing was the higher-leverage fix.
+
+## Fonts
+
+Body/heading font is **Plus Jakarta Sans** (via `next/font/google`), mono is **JetBrains Mono** — loaded in [app/layout.tsx](app/layout.tsx) as `--font-app-sans` / `--font-app-mono` and mapped to Tailwind's `--font-sans`/`--font-mono` in `globals.css`'s `@theme inline`. Chosen for strong legibility at small sizes and a geometric-but-friendly look that reads well to recruiters skimming quickly. To change the typeface, swap the `next/font/google` import/weights in `layout.tsx` — no other file needs touching since every component uses Tailwind's `font-sans`/`font-mono` (or no explicit font class, which inherits `font-sans` from `body`).
+
+## Resume download
+
+`profile.resume` (`app/data/resume.ts`) points at `/resume.pdf`, served from `public/resume.pdf`. A "Download Resume" button (`download` attribute, `lucide-react`'s `Download` icon) appears in `Hero.tsx`'s CTA row and in `Navbar.tsx` (a small icon-only button next to `ThemeToggle`/"Hire Me" on desktop, a labeled row in the mobile drawer). **`public/resume.pdf` currently ships as a placeholder stub — replace it with the real resume PDF (same filename) before shipping**; no component changes are needed when swapping the file.
 
 ## Libraries
 

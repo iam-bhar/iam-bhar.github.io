@@ -13,9 +13,9 @@ function applyTheme(theme: Theme) {
 }
 
 export default function ThemeToggle() {
-  // Defaults to dark (matches the inline anti-FOUC script + current site behavior)
+  // Defaults to light (matches the inline anti-FOUC script + current site behavior)
   // until mounted, then syncs from whatever the inline script already applied.
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function ThemeToggle() {
     // system" case effects are for, not derived render state.
     const current = document.documentElement.getAttribute("data-theme");
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTheme(current === "light" ? "light" : "dark");
+    setTheme(current === "dark" ? "dark" : "light");
     setMounted(true);
   }, []);
 
@@ -48,7 +48,7 @@ export default function ThemeToggle() {
         "neu-surface flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-glass/55 text-ink-soft transition-colors duration-300 hover:text-ink",
       )}
     >
-      {mounted && theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
+      {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
     </button>
   );
 }

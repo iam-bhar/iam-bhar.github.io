@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, X, User, Briefcase, FolderGit2, Code2, GraduationCap, Mail } from "lucide-react";
+import { Menu, X, User, Briefcase, FolderGit2, Code2, GraduationCap, Mail, Download } from "lucide-react";
 import { cn } from "@/app/lib/cn";
 import ThemeToggle from "@/app/components/ui/ThemeToggle";
 import Dock, { type DockItem } from "@/app/components/ui/Dock";
+import { profile } from "@/app/data/resume";
 
 const links: DockItem[] = [
   { href: "#about", label: "About", icon: User },
@@ -68,6 +69,15 @@ export default function Navbar() {
           <div className="hidden items-center gap-2 sm:flex">
             <ThemeToggle />
             <a
+              href={profile.resume}
+              download
+              aria-label="Download resume"
+              title="Download resume"
+              className="neu-surface flex h-10 w-10 items-center justify-center rounded-full text-ink-soft transition-colors duration-300 hover:text-ink"
+            >
+              <Download size={16} />
+            </a>
+            <a
               href="#contact"
               className="neu-surface-sm rounded-full border border-line bg-gradient-to-r from-indigo/90 to-purple/90 px-4 py-2 text-sm font-medium text-white shadow-[0_4px_16px_rgba(168,85,247,0.35)] transition-all duration-300 hover:shadow-[0_6px_22px_rgba(168,85,247,0.5)]"
             >
@@ -109,6 +119,16 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href={profile.resume}
+                  download
+                  onClick={() => setOpen(false)}
+                  className="neu-surface-sm mt-1 flex items-center justify-center gap-2 rounded-2xl border border-line px-4 py-3 text-center text-sm font-medium text-ink-soft"
+                >
+                  <Download size={16} /> Download Resume
+                </a>
+              </li>
               <li>
                 <a
                   href="#contact"

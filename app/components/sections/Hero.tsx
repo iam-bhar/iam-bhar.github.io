@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDownRight, Mail, MapPin } from "lucide-react";
+import { ArrowDownRight, Download, Mail, MapPin } from "lucide-react";
 import { profile } from "@/app/data/resume";
 import { cn } from "@/app/lib/cn";
 
@@ -100,6 +100,13 @@ export default function Hero() {
           className="flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
         >
           View Experience <ArrowDownRight size={16} />
+        </a>
+        <a
+          href={profile.resume}
+          download
+          className="neu-surface-sm flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
+        >
+          <Download size={16} /> Download Resume
         </a>
       </motion.div>
     </section>
