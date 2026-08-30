@@ -20,7 +20,7 @@ export default function Hero() {
       >
         <div
           className={cn(
-            "absolute -inset-1.5 rounded-[2.25rem] bg-[conic-gradient(from_0deg,#6366f1,#5ee7ff,#a855f7,#fbbf24,#6366f1)] opacity-80 blur-[2px]",
+            "absolute -inset-1.5 rounded-[2.25rem] bg-[conic-gradient(from_0deg,#8ba33c,#6fe08a,#4c6b1f,#c99a2e,#8ba33c)] opacity-80 blur-[2px]",
             shouldReduceMotion ? "" : "animate-[spin_8s_linear_infinite]",
           )}
         />
@@ -34,7 +34,7 @@ export default function Hero() {
             className="object-cover"
           />
         </div>
-        <span className="absolute -bottom-1.5 -right-1.5 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 border-space bg-success shadow-[0_0_16px_rgba(52,211,153,0.7)]">
+        <span className="absolute -bottom-1.5 -right-1.5 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 border-space bg-success shadow-[0_0_16px_rgba(34,165,89,0.7)]">
           <span className="h-2 w-2 rounded-full bg-white" />
         </span>
       </motion.div>
@@ -52,15 +52,15 @@ export default function Hero() {
         initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="relative max-w-3xl text-center"
+        className="relative max-w-3xl px-2 text-center"
       >
         <span
           aria-hidden
-          className="animate-name-glow absolute inset-0 bg-gradient-to-r from-indigo via-cyan to-purple bg-clip-text text-4xl font-bold tracking-tight text-transparent blur-xl sm:text-6xl"
+          className="animate-name-glow absolute inset-0 break-words bg-gradient-to-r from-indigo via-cyan to-purple bg-clip-text text-3xl font-bold tracking-tight text-transparent blur-xl sm:text-5xl md:text-6xl"
         >
           {profile.name}
         </span>
-        <h1 className="text-outline relative text-balance text-4xl font-bold tracking-tight text-ink sm:text-6xl">
+        <h1 className="text-outline relative break-words text-balance text-3xl font-bold tracking-tight text-ink sm:text-5xl md:text-6xl">
           {profile.name}
         </h1>
       </motion.div>
@@ -91,20 +91,20 @@ export default function Hero() {
       >
         <a
           href={`mailto:${profile.email}`}
-          className="group flex items-center gap-2 rounded-full border border-line bg-gradient-to-r from-indigo to-purple px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_28px_rgba(168,85,247,0.4)] transition-all duration-300 hover:shadow-[0_10px_36px_rgba(168,85,247,0.55)]"
+          className="liquid-glass-sm group flex items-center gap-2 rounded-full border border-line bg-gradient-to-r from-indigo to-purple px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_28px_rgba(36,179,85,0.4)] transition-all duration-300 hover:shadow-[0_10px_36px_rgba(36,179,85,0.55)]"
         >
           <Mail size={16} /> Get In Touch
         </a>
         <a
           href="#experience"
-          className="flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
+          className="liquid-glass-sm flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
         >
           View Experience <ArrowDownRight size={16} />
         </a>
         <a
           href={profile.resume}
           download
-          className="neu-surface-sm flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
+          className="neu-surface-sm liquid-glass-sm flex items-center gap-2 rounded-full border border-line-strong bg-glass/60 px-5 py-2.5 text-sm font-medium text-ink backdrop-blur-xl transition-all duration-300 hover:bg-glass/85"
         >
           <Download size={16} /> Download Resume
         </a>

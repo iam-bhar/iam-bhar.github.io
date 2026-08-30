@@ -70,7 +70,7 @@ export default function TiltIcon({ icon: Icon, className, size = 22, accent }: T
         ...(tiltEnabled ? { rotateX, rotateY, transformStyle: "preserve-3d", perspective: 600 } : undefined),
       }}
       className={cn(
-        "relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-line-strong icon-neu",
+        "relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-line-strong icon-neu liquid-glass-sm",
         palette ? `bg-gradient-to-br ${palette.gradient}` : "bg-gradient-to-b from-card-hover to-card",
         className,
       )}

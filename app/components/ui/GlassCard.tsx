@@ -4,15 +4,26 @@ import { type CSSProperties, type HTMLAttributes } from "react";
 
 type GlassCardProps = HTMLAttributes<HTMLDivElement> & {
   accent?: AccentKey;
+  /**
+   * Pass for a standalone hoverable card (project/job/expertise cards) to get the
+   * full lift + sheen liquid-glass treatment. Leave unset for a big outer section
+   * panel — those often *contain* other liquid-glass cards/buttons, and CSS
+   * :hover bubbles from any descendant, so giving the outer panel the same lift
+   * would make the whole section bob every time something inside it is hovered.
+   * Non-interactive panels still get the rim-light + sheen glass look, just
+   * without the transform.
+   */
+  interactive?: boolean;
 };
 
-export default function GlassCard({ className, accent, children, style, ...props }: GlassCardProps) {
+export default function GlassCard({ className, accent, interactive, children, style, ...props }: GlassCardProps) {
   const palette = accent ? accents[accent] : null;
 
   return (
     <div
       className={cn(
         "relative rounded-3xl border bg-glass/55 backdrop-blur-2xl glass-neu",
+        interactive ? "liquid-glass" : "liquid-glass-panel",
         palette ? "border-line-strong" : "border-line",
         className,
       )}

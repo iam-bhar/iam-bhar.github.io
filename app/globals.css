@@ -1,37 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  /* Background (light theme is now the default; see :root[data-theme="dark"] below) */
-  --space: #f4f6fb;
-  --midnight: #e7ebf3;
+  /* Background — warm grass/olive-tinted off-white (light theme is now the default;
+     see :root[data-theme="dark"] below for the dark, moss-black equivalents) */
+  --space: #f5f7ee;
+  --midnight: #e9edd8;
 
   /* Surfaces */
   --card: #ffffff;
-  --card-hover: #eef1f8;
+  --card-hover: #eef2e2;
   --glass: #ffffff;
 
   /* Borders */
-  --line: #dde3ee;
-  --line-strong: #c4ccdc;
+  --line: #dbe3c8;
+  --line-strong: #c1cfa4;
 
   /* Text */
-  --ink: #0f172a;
-  --ink-soft: #46536b;
-  --ink-faint: #6b7893;
+  --ink: #17210f;
+  --ink-soft: #445430;
+  --ink-faint: #6c7c53;
 
   color-scheme: light;
 
-  /* Accents */
-  --cyan: #5ee7ff;
-  --cyan-strong: #22d3ee;
-  --indigo: #6366f1;
-  --purple: #a855f7;
+  /* Accents — green/grass/olive palette (token names kept for backward-compat with
+     theme.ts/components; hues below are what actually renders) */
+  --cyan: #6fe08a;
+  /* grass green — primary bright accent */
+  --cyan-strong: #24b355;
+  /* deeper vivid green */
+  --indigo: #8ba33c;
+  /* olive-moss — mid accent */
+  --purple: #4c6b1f;
+  /* deep forest olive — secondary accent */
 
   /* Semantic */
-  --success: #34d399;
-  --warning: #fbbf24;
-  --error: #fb7185;
-  --info: #60a5fa;
+  --success: #22a559;
+  /* leaf green */
+  --warning: #c99a2e;
+  /* khaki gold */
+  --error: #b5502b;
+  /* terracotta/rust — reads as "error" without clashing with the greens */
+  --info: #3e8e7e;
+  /* sage teal */
+
+  /* Liquid-glass sheen/rim tints — chromatic on light surfaces (a faint grass-green
+     glint, since a plain white sheen is invisible on light surfaces), neutral white
+     on dark surfaces (see :root[data-theme="dark"] below). Used by .liquid-glass*. */
+  --glass-sheen: rgba(36, 179, 85, 0.4);
+  --glass-sheen-soft: rgba(36, 179, 85, 0.16);
+  --glass-rim: rgba(23, 33, 15, 0.14);
 
   --background: var(--space);
   --foreground: var(--ink);
@@ -71,17 +88,21 @@ html {
    the default theme. Accent/semantic hues (cyan/indigo/purple/warning/error/success)
    stay identical across themes; only base/surface/text tokens flip. */
 :root[data-theme="dark"] {
-  --space: #02040a;
-  --midnight: #05060b;
-  --card: #0b1220;
-  --card-hover: #0f1726;
-  --glass: #0a0f17;
-  --line: #1a2330;
-  --line-strong: #263244;
-  --ink: #ffffff;
-  --ink-soft: #cbd7e6;
-  --ink-faint: #9fb0c6;
+  --space: #050904;
+  --midnight: #070c05;
+  --card: #0d1509;
+  --card-hover: #121d0d;
+  --glass: #0b1108;
+  --line: #1c2916;
+  --line-strong: #2c3d1f;
+  --ink: #edf6e2;
+  --ink-soft: #c6d6ac;
+  --ink-faint: #91a575;
   color-scheme: dark;
+
+  --glass-sheen: rgba(255, 255, 255, 0.32);
+  --glass-sheen-soft: rgba(255, 255, 255, 0.12);
+  --glass-rim: rgba(255, 255, 255, 0.14);
 }
 
 body {
@@ -90,7 +111,7 @@ body {
 }
 
 ::selection {
-  background: rgba(94, 231, 255, 0.25);
+  background: rgba(36, 179, 85, 0.3);
   color: #fff;
 }
 
@@ -296,5 +317,194 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-name-glow {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Apple-style "Liquid Glass" treatment — additive to .glass-neu/.neu-surface*,
+   not a replacement. Three ingredients approximate a real glass pane in CSS:
+
+   1. A hairline "rim light" ring (::before, mask-composite cutout) that catches
+      light around the edge, like the bevel on a physical glass pane.
+   2. A diagonal specular sheen (::after) parked just off-canvas that sweeps
+      across the surface on hover/focus/press — the glossy "glint" every Apple
+      liquid-glass surface has when it catches the light.
+   3. A subtle lift + scale on hover, and a squishy scale-down on :active/tap so
+      touch devices (no hover) still get full tactile feedback from the press
+      alone — this is what makes it feel "good on mobile" too.
+
+   Colors read from --glass-sheen/--glass-sheen-soft/--glass-rim, which are
+   chromatic (grass-green tinted) in light mode and neutral white in dark mode
+   — see the :root / :root[data-theme="dark"] blocks above. */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 380ms ease, border-color 300ms ease;
+  will-change: transform;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--glass-rim) 0%, transparent 35%, transparent 65%, var(--glass-rim) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: -50% -70%;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 38%, var(--glass-sheen-soft) 47%, var(--glass-sheen) 52%, var(--glass-sheen-soft) 57%, transparent 66%);
+  transform: translateX(-65%) rotate(6deg);
+  transition: transform 950ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.liquid-glass:hover::after,
+.liquid-glass:focus-visible::after,
+.liquid-glass:active::after {
+  transform: translateX(65%) rotate(6deg);
+}
+
+.liquid-glass:hover,
+.liquid-glass:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+}
+
+.liquid-glass:active {
+  transform: translateY(-1px) scale(0.982);
+  transition-duration: 120ms;
+}
+
+/* Non-lifting variant for large containers that themselves hold other liquid-glass
+   controls (GlassCard section panels, the navbar pill) — rim-light + sheen sweep
+   only, no translateY/scale on the box itself. A container's :hover state fires
+   for ANY descendant hover too (that's just how CSS works), so giving a big panel
+   the same lift transform as its own buttons/badges would make the whole panel
+   bob every time you hover something inside it. This variant keeps the glass
+   glint (which *does* read nicely as ambient depth when nearby controls are
+   touched) without that jitter. */
+.liquid-glass-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: border-color 300ms ease;
+}
+
+.liquid-glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--glass-rim) 0%, transparent 35%, transparent 65%, var(--glass-rim) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.liquid-glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: -50% -70%;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 40%, var(--glass-sheen-soft) 48%, var(--glass-sheen) 52%, var(--glass-sheen-soft) 56%, transparent 64%);
+  transform: translateX(-65%) rotate(6deg);
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.liquid-glass-panel:hover::after,
+.liquid-glass-panel:focus-within::after {
+  transform: translateX(65%) rotate(6deg);
+}
+
+/* Smaller-throw variant for pills/buttons/icon chips — same sheen + rim language,
+   but a shorter lift and quicker sheen sweep so it doesn't feel sluggish on small
+   controls, and a firmer press-scale for clear touch feedback. */
+.liquid-glass-sm {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms ease, border-color 260ms ease;
+  will-change: transform;
+}
+
+.liquid-glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--glass-rim) 0%, transparent 45%, transparent 60%, var(--glass-rim) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.liquid-glass-sm::after {
+  content: "";
+  position: absolute;
+  inset: -80% -90%;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 40%, var(--glass-sheen-soft) 48%, var(--glass-sheen) 52%, var(--glass-sheen-soft) 56%, transparent 64%);
+  transform: translateX(-70%) rotate(6deg);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.liquid-glass-sm:hover::after,
+.liquid-glass-sm:focus-visible::after,
+.liquid-glass-sm:active::after {
+  transform: translateX(70%) rotate(6deg);
+}
+
+.liquid-glass-sm:hover,
+.liquid-glass-sm:focus-visible {
+  transform: translateY(-1.5px);
+  border-color: var(--line-strong);
+}
+
+.liquid-glass-sm:active {
+  transform: scale(0.94);
+  transition-duration: 100ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .liquid-glass,
+  .liquid-glass-sm,
+  .liquid-glass-panel {
+    transition: box-shadow 200ms ease, border-color 200ms ease;
+  }
+
+  .liquid-glass::after,
+  .liquid-glass-sm::after,
+  .liquid-glass-panel::after {
+    transition: none;
+    display: none;
+  }
+
+  .liquid-glass:hover,
+  .liquid-glass:focus-visible,
+  .liquid-glass:active,
+  .liquid-glass-sm:hover,
+  .liquid-glass-sm:focus-visible,
+  .liquid-glass-sm:active {
+    transform: none;
   }
 }

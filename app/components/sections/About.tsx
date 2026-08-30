@@ -49,7 +49,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : i * 0.1 }}
-              className="neu-surface-sm flex flex-col items-center gap-1 rounded-2xl border border-line/60 bg-card-hover/40 px-4 py-4 text-center"
+              className="neu-surface-sm liquid-glass-sm flex flex-col items-center gap-1 rounded-2xl border border-line/60 bg-card-hover/40 px-4 py-4 text-center"
               style={
                 {
                   "--neu-tint-light": `color-mix(in srgb, var(--neu-light) 82%, ${stat.glow} 18%)`,

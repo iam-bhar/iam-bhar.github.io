@@ -33,30 +33,34 @@ Profile photo: `public/my_photo.jpg`, referenced via `profile.photo`. To swap it
 
 **Single source of truth for every color in the app: CSS custom properties in [app/globals.css](app/globals.css) `:root`, re-exposed as Tailwind v4 tokens via `@theme inline`.** This generates real utility classes (`bg-space`, `text-ink`, `border-line`, `from-cyan`, `ring-indigo/30`, etc.) — never hardcode a Tailwind default color (`zinc-*`, `neutral-*`, `violet-*`...) in a component; always use a token below so a future palette change is a one-file edit.
 
+**Palette identity: green / grass / olive.** The site was originally cyan/indigo/purple; every accent and semantic token below was recolored to a cohesive green family while keeping the same token *names* (so `theme.ts`, `sectionAccents`, and every `accent` prop across components kept working unchanged — only the hex values moved). Don't reintroduce blue/purple/violet hues into these tokens; if a wholly new hue is ever needed, add a new CSS var instead of repurposing one of these.
+
 | Token | Hex | Utility examples | Use |
 |---|---|---|---|
-| `space` | `#070A0F` | `bg-space` | Page background (top of gradient) |
-| `midnight` | `#0B1018` | `bg-midnight` | Page background (bottom of gradient), scrolled navbar |
-| `card` | `#101722` | `bg-card` | Solid surfaces |
-| `card-hover` | `#151F2D` | `bg-card-hover` | Solid surface hover state |
-| `glass` | `#111927` | `bg-glass/NN` | Translucent glass panels (always with an opacity modifier) |
-| `line` | `#1A2330` | `border-line` | Subtle borders |
-| `line-strong` | `#263244` | `border-line-strong` | Emphasized/hover borders |
-| `ink` | `#F1F5F9` | `text-ink` | Primary text |
-| `ink-soft` | `#A7B2C3` | `text-ink-soft` | Secondary text |
-| `ink-faint` | `#667085` | `text-ink-faint` | Muted text |
-| `cyan` | `#5EE7FF` | `text-cyan`, `from-cyan` | Accent |
-| `cyan-strong` | `#22D3EE` | `to-cyan-strong` | Accent (stronger cyan) |
-| `indigo` | `#6366F1` | `from-indigo` | Accent |
-| `purple` | `#A855F7` | `to-purple` | Accent |
-| `success` | `#34D399` | `text-success` | Semantic + reused as "emerald" accent |
-| `warning` | `#FBBF24` | `text-warning` | Semantic + reused as "amber" accent |
-| `error` | `#FB7185` | `text-error` | Semantic + reused as "rose" accent |
-| `info` | `#60A5FA` | `text-info` | Semantic (not yet used as a section accent) |
+| `space` | `#F5F7EE` (light) / `#050904` (dark) | `bg-space` | Page background (top of gradient) — warm grass-tinted off-white in light, moss-black in dark |
+| `midnight` | `#E9EDD8` (light) / `#070C05` (dark) | `bg-midnight` | Page background (bottom of gradient), scrolled navbar |
+| `card` | `#FFFFFF` (light) / `#0D1509` (dark) | `bg-card` | Solid surfaces |
+| `card-hover` | `#EEF2E2` (light) / `#121D0D` (dark) | `bg-card-hover` | Solid surface hover state |
+| `glass` | `#FFFFFF` (light) / `#0B1108` (dark) | `bg-glass/NN` | Translucent glass panels (always with an opacity modifier) |
+| `line` | `#DBE3C8` (light) / `#1C2916` (dark) | `border-line` | Subtle borders |
+| `line-strong` | `#C1CFA4` (light) / `#2C3D1F` (dark) | `border-line-strong` | Emphasized/hover borders |
+| `ink` | `#17210F` (light) / `#EDF6E2` (dark) | `text-ink` | Primary text |
+| `ink-soft` | `#445430` (light) / `#C6D6AC` (dark) | `text-ink-soft` | Secondary text |
+| `ink-faint` | `#6C7C53` (light) / `#91A575` (dark) | `text-ink-faint` | Muted text |
+| `cyan` | `#6FE08A` | `text-cyan`, `from-cyan` | Grass green — primary bright accent |
+| `cyan-strong` | `#24B355` | `to-cyan-strong` | Deeper vivid green |
+| `indigo` | `#8BA33C` | `from-indigo` | Olive-moss — mid accent |
+| `purple` | `#4C6B1F` | `to-purple` | Deep forest olive — secondary accent |
+| `success` | `#22A559` | `text-success` | Leaf green — semantic + reused as "emerald" accent |
+| `warning` | `#C99A2E` | `text-warning` | Khaki gold — semantic + reused as "amber" accent |
+| `error` | `#B5502B` | `text-error` | Terracotta/rust — semantic + reused as "rose" accent; kept warm/earthy on purpose so it still reads as "error" without clashing with the greens |
+| `info` | `#3E8E7E` | `text-info` | Sage teal — semantic (not yet used as a section accent) |
 
-`app/data/theme.ts` layers a named `accents` map (`violet`, `cyan`, `amber`, `rose`, `emerald`) on top of these tokens — each key bundles a `gradient` (icon/border), `glow` (blur-shadow rgba, kept as raw rgba since CSS `background` shorthand can't consume a Tailwind class), and `text` class built from the tokens above. Components accept an `accent?: AccentKey` prop (`GlassCard`, `TiltIcon`) rather than hardcoding colors — to change a section's color, change which accent key is passed in that section component, edit the mapping in `sectionAccents`, or edit `accents` in `theme.ts` to change it everywhere at once. To introduce a wholly new hue, add the CSS var + `@theme inline` entry in `globals.css` first, then reference it from `theme.ts`.
+`app/data/theme.ts` layers a named `accents` map (`violet`, `cyan`, `amber`, `rose`, `emerald` — legacy key names, now green/olive hues under the hood) on top of these tokens — each key bundles a `gradient` (icon/border), `glow` (blur-shadow rgba, kept as raw rgba since CSS `background` shorthand can't consume a Tailwind class — these were hand-converted to match the new hex values, so re-derive them if a token hex ever changes), and `text` class built from the tokens above. Components accept an `accent?: AccentKey` prop (`GlassCard`, `TiltIcon`) rather than hardcoding colors — to change a section's color, change which accent key is passed in that section component, edit the mapping in `sectionAccents`, or edit `accents` in `theme.ts` to change it everywhere at once. To introduce a wholly new hue, add the CSS var + `@theme inline` entry in `globals.css` first, then reference it from `theme.ts`.
 
-Base: dark space/midnight gradient background (not flat black) with colorful cyan/indigo/purple accents plus warm amber/rose/emerald semantic-reused accents layered on top via gradients, glows, and blurred blobs — "colorful dark theme," not monochrome. The site leans intentionally colorful/vivid rather than subtle: `AnimatedBackground` runs four large blurred accent blobs at higher opacity (indigo/40, cyan/35, purple/30, warning/20) instead of a faint tint, and `GlassCard` renders a two-corner colored glow (not just one) at higher opacity (0.40 / 0.25) plus an `accent`-tinted `border-line-strong` border when an `accent` prop is passed — keep new colored surfaces at this same vividness rather than reverting to subtle/muted glows.
+Any hardcoded `rgba(...)`/hex literal outside the token system (button/badge glow shadows, the hero photo-ring conic-gradient, the online-status-dot glow) was likewise hand-converted to the new green/olive rgb values — grep for old values (`99,102,241` / `168,85,247` / `94,231,255` / `251,191,36` / `251,113,133` / `52,211,153` / `#6366f1` / `#a855f7` / `#5ee7ff`) before assuming a hardcoded color is current; there should be none left.
+
+Base: warm grass/olive gradient background (off-white in light, moss-black in dark — not flat white/black) with vivid grass-green/olive-moss/deep-forest-olive accents plus khaki/terracotta/sage semantic-reused accents layered on top via gradients, glows, and blurred blobs — "colorful green/grass/olive theme," not monochrome. The site leans intentionally colorful/vivid rather than subtle: `AnimatedBackground` runs four large blurred accent blobs at higher opacity (indigo/40, cyan/35, purple/30, warning/20 — now olive/grass/deep-olive/khaki) instead of a faint tint, and `GlassCard` renders a two-corner colored glow (not just one) at higher opacity (0.40 / 0.25) plus an `accent`-tinted `border-line-strong` border when an `accent` prop is passed — keep new colored surfaces at this same vividness rather than reverting to subtle/muted glows.
 
 ### Light/dark theme (toggle; light is default)
 
@@ -74,9 +78,9 @@ Theme switching is hand-rolled (no `next-themes` dependency):
 
 ## Design system
 
-- **Liquid glass**: `GlassCard` (app/components/ui/GlassCard.tsx) — `backdrop-blur-2xl`, translucent white overlay borders, soft shadow, two-corner colored radial glow + `border-line-strong` border via `accent` prop (see the vividness note above).
+- **Liquid glass**: `GlassCard` (app/components/ui/GlassCard.tsx) — `backdrop-blur-2xl`, translucent white overlay borders, soft shadow, two-corner colored radial glow + `border-line-strong` border via `accent` prop (see the vividness note above). See "Apple-style Liquid Glass" below for the hover/touch sheen treatment layered on top.
 - **3D icons**: `TiltIcon` (app/components/ui/TiltIcon.tsx) — pointer-tracked rotateX/rotateY tilt + radial pointer-light + optional gradient/glow background via `accent` prop. Used for every section icon (experience, skills, education, contact) instead of flat icons.
-- **Aceternity-style effects**: hand-rolled (no external Aceternity package — those are copy-paste components, not an npm dependency); see the animated blob background in `app/components/ui/AnimatedBackground.tsx` (four blurred accent blobs, higher opacity per the vividness note above). The hero no longer has its own conic-gradient spotlight glow (`Spotlight.tsx` was removed) — it now relies solely on the page-wide `AnimatedBackground` gradient/blobs showing through, per request ("remove hero gradient, keep the whole-page gradient"). Remaining conic-gradient hex literals (the hero photo ring) hardcode accent hex values (raw CSS gradients can't consume Tailwind token classes) — keep these in sync with the token table above if the palette changes.
+- **Aceternity-style effects**: hand-rolled (no external Aceternity package — those are copy-paste components, not an npm dependency); see the animated blob background in `app/components/ui/AnimatedBackground.tsx` (four blurred accent blobs, higher opacity per the vividness note above). The hero no longer has its own conic-gradient spotlight glow (`Spotlight.tsx` was removed) — it now relies solely on the page-wide `AnimatedBackground` gradient/blobs showing through, per request ("remove hero gradient, keep the whole-page gradient"). The hero photo ring's conic-gradient hex literals (`Hero.tsx`) hardcode accent hex values (raw CSS gradients can't consume Tailwind token classes) — currently `#8ba33c`/`#6fe08a`/`#4c6b1f`/`#c99a2e`, matching `indigo`/`cyan`/`purple`/`warning`; keep these in sync with the token table above if the palette changes.
 - **iOS-style**: pill-shaped floating navbar, `rounded-3xl`/`rounded-[2rem]` cards, soft blur everywhere.
 - **macOS-style dock nav** (desktop, `sm:` and up): `app/components/ui/Dock.tsx` — a generic `Dock`/`DockItem` pair, icon-only nav items that magnify (34px → 50px) based on cursor proximity along the x-axis, spring-smoothed (`useSpring`), with a floating label tooltip on hover/focus. `Navbar.tsx` feeds it `links: DockItem[]` (`{ href, label, icon }`, one `lucide-react` icon per section). `disableMagnify` is passed `shouldReduceMotion` so the size stays fixed at 34px (no spring/motion-value animation) under reduced motion.
 - **Mobile**: Navbar collapses to a hamburger (`Menu`/`X` icons) that opens an animated glass dropdown drawer below `sm:` breakpoint (unchanged — the dock is a desktop-only replacement for the old text nav-links row since mouse-proximity magnification has no equivalent on touch); all grids stack via Tailwind responsive classes (`sm:`, `lg:`).
@@ -96,6 +100,20 @@ All four derive their base light/dark shadow tints from existing tokens via `col
 **Colorful tinting**: every class reads its shadow color through `color-mix(in srgb, var(--neu-tint-light, var(--neu-light)) N%, transparent)` (and the `-dark` equivalent) — i.e. an optional `--neu-tint-light`/`--neu-tint-dark` custom property pair that, when unset, falls back to the plain neutral tokens. Any accent-bearing component (`GlassCard`, `TiltIcon`, About's stat tiles, Education's interest pills) sets these two custom properties inline to `color-mix(in srgb, var(--neu-light) ~80%, ${accent.glow} ~18-22%)` (same pattern for `--neu-dark`), pulling the accent's `glow` rgba straight from `app/data/theme.ts`'s `accents` map — the same source every other colored-glow treatment on the site already uses. This is what keeps the neumorphism "colorful" (a faint cyan/violet/amber/rose/emerald cast per section) instead of flattening everything to gray; no new hardcoded grays or parallel color system were introduced.
 
 Applied to: `ThemeToggle` button; `Navbar`'s desktop nav links/"Hire Me" pill/hamburger button/mobile drawer "Hire Me" link; `TechBadge` pills; `Contact`'s per-item tiles; `SectionHeading`'s eyebrow pill (every section); `GlassCard` (every section panel — About, Experience, Projects, Skills, Education, Contact); `TiltIcon` (every icon instance — Experience, Skills, Education, Contact); About's three stat tiles (now wrapped in a small bordered/tinted surface, tinted per-stat with violet/cyan/amber glows); Education's "Beyond Work" interest pills (tinted violet, matching that subsection's icon accent).
+
+### Apple-style Liquid Glass (hover + touch sheen, site-wide)
+
+Three CSS classes in `app/globals.css` approximate Apple's "Liquid Glass" material (visionOS/iOS-style) on top of the existing glass/neumorphic layers — a hairline rim-light border, a diagonal specular sheen that sweeps across the surface, and a lift/press transform:
+
+- `.liquid-glass` — full treatment (rim + sheen + lift-on-hover + scale-down-on-press) for standalone interactive elements: buttons, pills, and — via `GlassCard`'s `interactive` prop — cards inside a grid.
+- `.liquid-glass-sm` — same treatment, smaller throw/faster sheen, for small controls (`TechBadge`, `ThemeToggle`, Dock items, nav pills/buttons, TiltIcon chips, Contact tiles, About's stat tiles, Education's interest pills).
+- `.liquid-glass-panel` — rim + sheen only, **no lift/scale transform**, for big containers that themselves hold other `.liquid-glass*` elements (the outer section `GlassCard`s, the navbar pill, the mobile drawer). CSS `:hover` bubbles up from any descendant, so giving a large panel the same lift as its own children would make the whole panel bob every time something inside it is hovered — this variant keeps the ambient glass glint without that jitter.
+
+**`GlassCard`'s `interactive` prop decides which variant it gets**: pass `interactive` for a standalone hoverable card (a single project/job/expertise-category card in a grid — see `Experience.tsx`, `Skills.tsx`, `Projects.tsx`'s inner `GlassCard` calls) to get `.liquid-glass` (full lift). Leave it unset for an outer section panel (About/Experience/Projects/Skills/Education/Contact's outer `GlassCard`) to get `.liquid-glass-panel` (no lift) — **this matters because several sections nest an `interactive` `GlassCard` inside a non-interactive outer one**, and giving both the lift transform would double up.
+
+Sheen/rim colors read through `--glass-sheen` / `--glass-sheen-soft` / `--glass-rim` custom properties, redefined per theme: **chromatic (grass-green tinted)** in light mode — a plain white sheen is invisible against light surfaces — and **neutral white** in dark mode, the classic glass-glint look. All three classes degrade under `prefers-reduced-motion: reduce` to a border/shadow-only transition with no sheen sweep or transform.
+
+Touch/mobile gets the same feedback for free: `:active` (which fires on tap, not just `:hover`) triggers both the sheen sweep and a firm press-scale (`scale(0.94)` for `-sm`, `scale(0.982)` for the full variant) — this is what makes controls feel tactile on a phone with no hover capability, not a separate mobile-only code path.
 
 ### UX-law audit (2026-08-13)
 
@@ -126,7 +144,7 @@ Goal is cheaper-per-frame motion, not less-alive motion:
 
 - Every Framer Motion component that animates on mount/scroll (`Hero`, `Navbar`, `SectionHeading`, section reveal `motion.div`s in `About`/`Experience`/`Skills`/`Education`/`Contact`) calls `useReducedMotion()` and skips/shortens transforms when it's `true` (typically `initial={shouldReduceMotion ? false : {...}}`, i.e. render already-settled instead of animating in). `globals.css` still separately disables the CSS keyframe animations (`animate-blob-*`, `animate-name-glow`) under `@media (prefers-reduced-motion: reduce)`.
 - All `whileInView` reveals use `viewport={{ once: true, ... }}` so they fire once and don't re-trigger on repeated scroll past the same element.
-- `GlassCard` has no hover/pointer-tracked tilt (removed per request — cards are static now, only their `accent` glow is decorative). `TiltIcon`'s pointer-tracked rotateX/rotateY + glow still skips entirely when `useReducedMotion()` is true, and additionally checks `window.matchMedia("(pointer: fine)")` on mount to disable the tilt/glow listeners on touch devices (no meaningful hover pointer there, and it avoids pointless per-touch re-renders).
+- `GlassCard` has no pointer-tracked 3D tilt (removed per an earlier request) — but it does get a plain CSS hover lift via the Liquid Glass treatment when `interactive` is passed (see "Apple-style Liquid Glass" above); non-interactive (outer panel) `GlassCard`s stay static aside from the sheen glint. `TiltIcon`'s pointer-tracked rotateX/rotateY + glow still skips entirely when `useReducedMotion()` is true, and additionally checks `window.matchMedia("(pointer: fine)")` on mount to disable the tilt/glow listeners on touch devices (no meaningful hover pointer there, and it avoids pointless per-touch re-renders) — touch devices still get the Liquid Glass press-scale/sheen from `:active` instead.
 - `AnimatedBackground.tsx` is a client component that listens for `visibilitychange` and applies `[animation-play-state:paused]` to the blob divs while the tab is hidden, so the blurred blobs stop costing CPU/battery when the page isn't visible. It now renders 4 blobs at higher opacity (see the vividness note under Theme) — cut further if profiling shows it's needed, but tab-visibility pausing was the higher-leverage fix.
 
 ## Fonts

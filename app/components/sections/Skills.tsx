@@ -72,7 +72,7 @@ export default function Skills() {
                 transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="group"
               >
-                <GlassCard accent={accent} className="flex h-full flex-col gap-4 p-6">
+                <GlassCard accent={accent} interactive className="flex h-full flex-col gap-4 p-6">
                   <TiltIcon icon={Icon} accent={accent} />
                   <h3 className="text-base font-semibold text-ink">{group.title}</h3>
                   <ul className="flex flex-wrap gap-1.5">

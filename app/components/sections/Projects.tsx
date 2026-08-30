@@ -27,7 +27,7 @@ function ProjectCard({ project, accent, index }: { project: (typeof projects)[nu
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : Math.min(index * 0.04, 0.4), ease: [0.16, 1, 0.3, 1] }}
     >
-      <GlassCard accent={accent} className="flex h-full flex-col p-5 sm:p-6">
+      <GlassCard accent={accent} interactive className="flex h-full flex-col p-5 sm:p-6">
         <div className="mb-2 flex items-start justify-between gap-3">
           <div>
             <h3 className="text-base font-semibold text-ink">{project.title}</h3>

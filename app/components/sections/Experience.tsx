@@ -40,7 +40,7 @@ export default function Experience() {
                   <TiltIcon icon={Briefcase} accent={jobAccents[i % jobAccents.length]} />
                 </div>
 
-                <GlassCard accent={jobAccents[i % jobAccents.length]} className="p-5 sm:p-6">
+                <GlassCard accent={jobAccents[i % jobAccents.length]} interactive className="p-5 sm:p-6">
                   <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="text-lg font-semibold text-ink">{job.role}</h3>

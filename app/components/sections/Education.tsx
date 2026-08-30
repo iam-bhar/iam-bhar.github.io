@@ -98,7 +98,7 @@ export default function Education() {
               {interests.map((interest) => (
                 <span
                   key={interest}
-                  className="neu-surface-sm rounded-full border border-line bg-glass/50 px-3.5 py-1.5 text-xs font-medium text-ink-soft"
+                  className="neu-surface-sm liquid-glass-sm rounded-full border border-line bg-glass/50 px-3.5 py-1.5 text-xs font-medium text-ink-soft"
                   style={
                     {
                       "--neu-tint-light": `color-mix(in srgb, var(--neu-light) 85%, ${accents.violet.glow} 15%)`,

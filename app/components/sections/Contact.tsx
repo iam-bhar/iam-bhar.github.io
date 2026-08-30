@@ -35,7 +35,7 @@ export default function Contact() {
               <div
                 className={cn(
                   "neu-surface flex items-center gap-4 rounded-2xl border border-line bg-glass/40 p-4 transition-all duration-300",
-                  item.href && "hover:border-line-strong hover:bg-glass/60",
+                  item.href && "liquid-glass-sm hover:border-line-strong hover:bg-glass/60",
                 )}
               >
                 <TiltIcon icon={item.icon} accent={item.accent} size={18} className="h-11 w-11" />

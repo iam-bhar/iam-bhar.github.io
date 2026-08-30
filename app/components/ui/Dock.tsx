@@ -66,7 +66,7 @@ function DockIcon({ item, mouseX, disableMagnify }: { item: DockItem; mouseX: Mo
         onBlur={() => setHovered(false)}
         style={{ width: size, height: size }}
         className={cn(
-          "neu-surface-sm flex min-h-9 min-w-9 items-center justify-center rounded-full text-ink-soft transition-colors duration-200 hover:text-ink",
+          "neu-surface-sm liquid-glass-sm flex min-h-9 min-w-9 items-center justify-center rounded-full text-ink-soft transition-colors duration-200 hover:text-ink",
         )}
       >
         <Icon size={16} className="pointer-events-none" />

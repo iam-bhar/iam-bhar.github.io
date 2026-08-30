@@ -24,7 +24,7 @@ export default function SectionHeading({ eyebrow, title, className, compact }: S
     >
       <span
         className={cn(
-          "neu-surface-sm rounded-full border border-line bg-glass/55 font-medium uppercase tracking-[0.2em] text-ink-soft backdrop-blur-xl",
+          "neu-surface-sm liquid-glass-sm rounded-full border border-line bg-glass/55 font-medium uppercase tracking-[0.2em] text-ink-soft backdrop-blur-xl",
           compact ? "mb-2 px-3 py-1 text-[10px]" : "mb-3 px-4 py-1.5 text-xs",
         )}
       >

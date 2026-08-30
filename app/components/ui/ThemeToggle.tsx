@@ -45,7 +45,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label={mounted ? `Switch to ${theme === "dark" ? "light" : "dark"} mode` : "Toggle theme"}
       className={cn(
-        "neu-surface flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-glass/55 text-ink-soft transition-colors duration-300 hover:text-ink",
+        "neu-surface liquid-glass-sm flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-glass/55 text-ink-soft transition-colors duration-300 hover:text-ink",
       )}
     >
       {theme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
