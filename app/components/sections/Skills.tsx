@@ -52,7 +52,6 @@ export default function Skills() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : i * 0.03 }}
-              whileHover={shouldReduceMotion ? undefined : { y: -3 }}
             >
               <TechBadge name={skill} size="md" className="px-1 py-1.5 text-sm" />
             </motion.span>

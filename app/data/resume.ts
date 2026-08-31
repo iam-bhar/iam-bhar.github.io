@@ -9,7 +9,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/bhargav-lal-krishna-pulluru-46544a202/",
   initials: "BK",
   photo: "/my_photo.jpg",
-  resume: "/resume.pdf",
+  resume: "/Bhargavlal_KrishnaReddy_Resume.pdf",
 };
 
 export const skills = [

@@ -82,7 +82,7 @@ Theme switching is hand-rolled (no `next-themes` dependency):
 - **3D icons**: `TiltIcon` (app/components/ui/TiltIcon.tsx) — pointer-tracked rotateX/rotateY tilt + radial pointer-light + optional gradient/glow background via `accent` prop. Used for every section icon (experience, skills, education, contact) instead of flat icons.
 - **Aceternity-style effects**: hand-rolled (no external Aceternity package — those are copy-paste components, not an npm dependency); see the animated blob background in `app/components/ui/AnimatedBackground.tsx` (four blurred accent blobs, higher opacity per the vividness note above). The hero no longer has its own conic-gradient spotlight glow (`Spotlight.tsx` was removed) — it now relies solely on the page-wide `AnimatedBackground` gradient/blobs showing through, per request ("remove hero gradient, keep the whole-page gradient"). The hero photo ring's conic-gradient hex literals (`Hero.tsx`) hardcode accent hex values (raw CSS gradients can't consume Tailwind token classes) — currently `#8ba33c`/`#6fe08a`/`#4c6b1f`/`#c99a2e`, matching `indigo`/`cyan`/`purple`/`warning`; keep these in sync with the token table above if the palette changes.
 - **iOS-style**: pill-shaped floating navbar, `rounded-3xl`/`rounded-[2rem]` cards, soft blur everywhere.
-- **macOS-style dock nav** (desktop, `sm:` and up): `app/components/ui/Dock.tsx` — a generic `Dock`/`DockItem` pair, icon-only nav items that magnify (34px → 50px) based on cursor proximity along the x-axis, spring-smoothed (`useSpring`), with a floating label tooltip on hover/focus. `Navbar.tsx` feeds it `links: DockItem[]` (`{ href, label, icon }`, one `lucide-react` icon per section). `disableMagnify` is passed `shouldReduceMotion` so the size stays fixed at 34px (no spring/motion-value animation) under reduced motion.
+- **macOS-style dock nav** (desktop, `sm:` and up): `app/components/ui/Dock.tsx` — a generic `Dock`/`DockItem` pair, icon-only nav items that magnify (34px → 50px) based on cursor proximity along the x-axis, spring-smoothed (`useSpring`), without a hover label popover. `Navbar.tsx` feeds it `links: DockItem[]` (`{ href, label, icon }`, one `lucide-react` icon per section). `disableMagnify` is passed `shouldReduceMotion` so the size stays fixed at 34px (no spring/motion-value animation) under reduced motion.
 - **Mobile**: Navbar collapses to a hamburger (`Menu`/`X` icons) that opens an animated glass dropdown drawer below `sm:` breakpoint (unchanged — the dock is a desktop-only replacement for the old text nav-links row since mouse-proximity magnification has no equivalent on touch); all grids stack via Tailwind responsive classes (`sm:`, `lg:`).
 - **Motion**: Framer Motion `whileInView` scroll reveals on every section, spring-based tilt on icons, `AnimatePresence` for the mobile menu.
 
@@ -103,7 +103,7 @@ Applied to: `ThemeToggle` button; `Navbar`'s desktop nav links/"Hire Me" pill/ha
 
 ### Apple-style Liquid Glass (hover + touch sheen, site-wide)
 
-Three CSS classes in `app/globals.css` approximate Apple's "Liquid Glass" material (visionOS/iOS-style) on top of the existing glass/neumorphic layers — a hairline rim-light border, a diagonal specular sheen that sweeps across the surface, and a lift/press transform:
+Three CSS classes in `app/globals.css` approximate Apple's "Liquid Glass" material (visionOS/iOS-style) on top of the existing glass/neumorphic layers — a hairline rim-light border, a diagonal specular sheen that sweeps across the surface, and a lift/press transform. Hover-only sheen/lift rules are gated behind `@media (hover: hover) and (pointer: fine)`, preventing mobile browsers from retaining a hover state after taps:
 
 - `.liquid-glass` — full treatment (rim + sheen + lift-on-hover + scale-down-on-press) for standalone interactive elements: buttons, pills, and — via `GlassCard`'s `interactive` prop — cards inside a grid.
 - `.liquid-glass-sm` — same treatment, smaller throw/faster sheen, for small controls (`TechBadge`, `ThemeToggle`, Dock items, nav pills/buttons, TiltIcon chips, Contact tiles, About's stat tiles, Education's interest pills).
@@ -113,7 +113,7 @@ Three CSS classes in `app/globals.css` approximate Apple's "Liquid Glass" materi
 
 Sheen/rim colors read through `--glass-sheen` / `--glass-sheen-soft` / `--glass-rim` custom properties, redefined per theme: **chromatic (grass-green tinted)** in light mode — a plain white sheen is invisible against light surfaces — and **neutral white** in dark mode, the classic glass-glint look. All three classes degrade under `prefers-reduced-motion: reduce` to a border/shadow-only transition with no sheen sweep or transform.
 
-Touch/mobile gets the same feedback for free: `:active` (which fires on tap, not just `:hover`) triggers both the sheen sweep and a firm press-scale (`scale(0.94)` for `-sm`, `scale(0.982)` for the full variant) — this is what makes controls feel tactile on a phone with no hover capability, not a separate mobile-only code path.
+Touch/mobile uses only the transient `:active` feedback: a sheen sweep and firm press-scale (`scale(0.94)` for `-sm`, `scale(0.982)` for the full variant). This keeps controls tactile without a persistent hover state after taps.
 
 ### UX-law audit (2026-08-13)
 
@@ -153,7 +153,7 @@ Body/heading font is **Plus Jakarta Sans** (via `next/font/google`), mono is **J
 
 ## Resume download
 
-`profile.resume` (`app/data/resume.ts`) points at `/resume.pdf`, served from `public/resume.pdf`. A "Download Resume" button (`download` attribute, `lucide-react`'s `Download` icon) appears in `Hero.tsx`'s CTA row and in `Navbar.tsx` (a small icon-only button next to `ThemeToggle`/"Hire Me" on desktop, a labeled row in the mobile drawer). **`public/resume.pdf` currently ships as a placeholder stub — replace it with the real resume PDF (same filename) before shipping**; no component changes are needed when swapping the file.
+`profile.resume` (`app/data/resume.ts`) points at `/Bhargavlal_KrishnaReddy_Resume.pdf`, served from `public/Bhargavlal_KrishnaReddy_Resume.pdf`. A "Download Resume" button (`download` attribute, `lucide-react`'s `Download` icon) appears in `Hero.tsx`'s CTA row and in `Navbar.tsx` (a small icon-only button next to `ThemeToggle`/"Hire Me" on desktop, a labeled row in the mobile drawer). **`public/Bhargavlal_KrishnaReddy_Resume.pdf` currently ships as a placeholder stub — replace it with the real resume PDF (same filename) before shipping**; no component changes are needed when swapping the file.
 
 ## Libraries
 

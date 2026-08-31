@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence, type MotionValue } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/app/lib/cn";
 
@@ -30,7 +30,6 @@ export default function Dock({ items, disableMagnify = false }: { items: DockIte
 
 function DockIcon({ item, mouseX, disableMagnify }: { item: DockItem; mouseX: MotionValue<number>; disableMagnify: boolean }) {
   const ref = useRef<HTMLLIElement | null>(null);
-  const [hovered, setHovered] = useState(false);
   const Icon = item.icon;
 
   const distance = useTransform(mouseX, (val) => {
@@ -44,26 +43,9 @@ function DockIcon({ item, mouseX, disableMagnify }: { item: DockItem; mouseX: Mo
 
   return (
     <li ref={ref} className="relative flex flex-col items-center">
-      <AnimatePresence>
-        {hovered && (
-          <motion.span
-            initial={{ opacity: 0, y: 4, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="absolute -top-8 whitespace-nowrap rounded-full border border-line bg-midnight/90 px-2.5 py-1 text-[11px] font-medium text-ink shadow-[0_4px_16px_rgba(0,0,0,0.4)] backdrop-blur-xl"
-          >
-            {item.label}
-          </motion.span>
-        )}
-      </AnimatePresence>
       <motion.a
         href={item.href}
         aria-label={item.label}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
         style={{ width: size, height: size }}
         className={cn(
           "neu-surface-sm liquid-glass-sm flex min-h-9 min-w-9 items-center justify-center rounded-full text-ink-soft transition-colors duration-200 hover:text-ink",

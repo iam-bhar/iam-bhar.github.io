@@ -369,13 +369,34 @@ body {
   pointer-events: none;
 }
 
-.liquid-glass:hover::after,
+@media (hover: hover) and (pointer: fine) {
+
+  /* .liquid-glass:hover::after,
+  .liquid-glass-sm:hover::after,
+  .liquid-glass-panel:hover::after {
+    transform: translateX(65%) rotate(6deg);
+  }
+
+  .liquid-glass-sm:hover::after {
+    transform: translateX(70%) rotate(6deg);
+  } */
+
+  .liquid-glass:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+  }
+
+  .liquid-glass-sm:hover {
+    transform: translateY(-1.5px);
+    border-color: var(--line-strong);
+  }
+}
+
 .liquid-glass:focus-visible::after,
 .liquid-glass:active::after {
   transform: translateX(65%) rotate(6deg);
 }
 
-.liquid-glass:hover,
 .liquid-glass:focus-visible {
   transform: translateY(-3px);
   border-color: var(--line-strong);
@@ -415,7 +436,7 @@ body {
   pointer-events: none;
 }
 
-.liquid-glass-panel::after {
+/* .liquid-glass-panel::after {
   content: "";
   position: absolute;
   inset: -50% -70%;
@@ -424,9 +445,8 @@ body {
   transform: translateX(-65%) rotate(6deg);
   transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
-}
+} */
 
-.liquid-glass-panel:hover::after,
 .liquid-glass-panel:focus-within::after {
   transform: translateX(65%) rotate(6deg);
 }
@@ -467,13 +487,11 @@ body {
   pointer-events: none;
 }
 
-.liquid-glass-sm:hover::after,
 .liquid-glass-sm:focus-visible::after,
 .liquid-glass-sm:active::after {
   transform: translateX(70%) rotate(6deg);
 }
 
-.liquid-glass-sm:hover,
 .liquid-glass-sm:focus-visible {
   transform: translateY(-1.5px);
   border-color: var(--line-strong);
